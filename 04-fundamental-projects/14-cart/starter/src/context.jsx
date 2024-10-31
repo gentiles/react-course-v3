@@ -1,6 +1,6 @@
 import { createContext, useContext, useReducer, useEffect } from 'react'
 import { defaultState, reducer } from './reducer'
-import getTotal from './utils.js'
+
 import {
   CLEAR_LIST,
   RESET_LIST,
@@ -10,13 +10,13 @@ import {
   LOADING,
   DISPLAY_ITEMS,
 } from './action'
-const Appcontext = createContext()
+import { getTotal } from './utils'
+const AppContext = createContext()
 
 const Context = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, defaultState)
-  const {totalAmount, totalCost} = getTotal(state.cart)
+  const { totalAmount, totalCost } = getTotal(state.cart)
 
-  console.log(state.cart)
   const clearList = () => {
     dispatch({ type: CLEAR_LIST })
   }
@@ -33,12 +33,12 @@ const Context = ({ children }) => {
     dispatch({ type: INCREASE, payload: { id } })
   }
 
-  const decrease =(id)=>{
-    dispatch({type: DECREASE, payload:{id}})
+  const decrease = (id) => {
+    dispatch({ type: DECREASE, payload: { id } })
   }
 
   return (
-    <Appcontext.Provider
+    <AppContext.Provider
       value={{
         ...state,
         clearList,
@@ -51,11 +51,11 @@ const Context = ({ children }) => {
       }}
     >
       {children}
-    </Appcontext.Provider>
+    </AppContext.Provider>
   )
 }
 export default Context
 
 export const useGlobalAppContext = () => {
-  return useContext(Appcontext)
+  return useContext(AppContext)
 }

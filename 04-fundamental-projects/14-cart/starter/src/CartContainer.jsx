@@ -2,7 +2,7 @@ import CartItem from './CartItem'
 import { useGlobalAppContext } from './context'
 // import cartItems from './data'
 const CartContainer = () => {
-  const { clearList, resetList, state, cart } = useGlobalAppContext()
+  const { clearList, resetList, state, cart, totalCost } = useGlobalAppContext()
   const cartArray = Array.from(cart.entries())
 
   if (cartArray.length === 0) {
@@ -37,7 +37,7 @@ const CartContainer = () => {
         <hr />
         <div>
           <h5 className="cart-total">
-            total <span>$10</span>
+            total <span>{totalCost}</span>
           </h5>
         </div>
 
